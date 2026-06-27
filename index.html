@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ===== EDIT THIS: the browser tab title ===== -->
+<title>Sadaf Nezam — Game Developer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:        #131119;
+    --panel:      #1c1a25;
+    --panel-edge: #2c2937;
+    --paper:      #ece8e0;
+    --muted:      #8d889b;
+    --p1:         #ff8a5b;
+    --p2:         #57d2cd;
+
+    --display: 'Space Grotesk', sans-serif;
+    --body:    'Newsreader', Georgia, serif;
+    --mono:    'Space Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--ink);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7'%3E%3Cpath d='M0 0L7 7M0 7L7 0' fill='none' stroke='%23ffffff' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E"),
+      radial-gradient(1100px 620px at 8% -10%, rgba(255,138,91,0.12), transparent 60%),
+      radial-gradient(950px 620px at 100% -8%, rgba(87,210,205,0.10), transparent 58%);
+    background-size: 7px 7px, 100% 100%, 100% 100%;
+    background-repeat: repeat, no-repeat, no-repeat;
+    background-attachment: scroll, fixed, fixed;
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 18px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+
+  .hud {
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ---------------- NAV ---------------- */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(19,17,25,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--panel-edge);
+  }
+  nav { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+  nav .name {
+    font-family: var(--display); font-weight: 700;
+    font-size: 17px; letter-spacing: -0.01em;
+    color: var(--paper); text-decoration: none;
+  }
+  nav .links { display: flex; gap: 26px; }
+  nav .links a {
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  nav .links a:hover { color: var(--paper); }
+
+  /* ---------------- HERO ---------------- */
+  .hero {
+    padding: 100px 28px 84px;
+  }
+  .hero h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(32px, 4.4vw, 50px);
+    line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 12px;
+  }
+  .hero .role-title {
+    font-family: var(--display); font-weight: 500;
+    font-size: clamp(18px, 2.2vw, 24px);
+    letter-spacing: -0.01em; color: var(--p1); margin-bottom: 25px;
+  }
+  .hero p { font-size: clamp(16px, 1.6vw, 17.5px); max-width: none; color: var(--paper); line-height: 1.55; text-align: justify; }
+  .hero p .dim { color: var(--muted); }
+  .hero .portrait {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 4px; border: 1px solid var(--panel-edge); background: #0f0e14;
+  }
+
+  /* ---------------- SECTION HEADS ---------------- */
+  .section { padding: 70px 0; border-top: 1px solid var(--panel-edge); }
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 44px; }
+  .section-head h2 {
+    font-family: var(--display); font-weight: 500;
+    font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--paper);
+  }
+  .section-head .rule { flex: 1; height: 1px; background: var(--panel-edge); }
+
+  /* ---------------- PROJECT CARD ---------------- */
+  .project {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+    grid-template-areas:
+      "media intro"
+      "did   did"
+      "links links";
+    gap: 24px 38px; align-items: start;
+    padding: 30px; margin-bottom: 30px;
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: 4px;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .project:hover { transform: translateY(-3px); }
+  .project.p1:hover { border-color: var(--p1); }
+  .project.p2:hover { border-color: var(--p2); }
+
+  .project .media { grid-area: media; }
+  .project .intro { grid-area: intro; }
+  .project .did   { grid-area: did; }
+  .project .links { grid-area: links; }
+
+  /* media (the gif/video) */
+  .project .media {
+    width: 100%; aspect-ratio: 16 / 9;
+    object-fit: cover; display: block;
+    border-radius: 3px; border: 1px solid var(--panel-edge);
+    background: #0f0e14;
+  }
+  /* flip = media on the right (used on alternating cards) */
+  .project.flip {
+    grid-template-areas:
+      "intro media"
+      "did   did"
+      "links links";
+  }
+
+  .project .tag {
+    display: inline-block; padding: 4px 10px; margin-bottom: 16px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; border-radius: 3px;
+  }
+  .p1 .tag { color: var(--p1); border: 1px solid var(--p1); }
+  .p2 .tag { color: var(--p2); border: 1px solid var(--p2); }
+
+  .project h3 {
+    font-family: var(--display); font-weight: 700;
+    font-size: 30px; letter-spacing: -0.02em; margin-bottom: 12px;
+  }
+
+  /* meta line: dates / team / engine */
+  .project .meta { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-bottom: 16px; }
+  .project .meta span {
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.02em; color: var(--muted);
+  }
+  .project .meta span + span { position: relative; padding-left: 12px; }
+  .project .meta span + span::before {
+    content: ""; position: absolute; left: 0; top: 50%;
+    width: 4px; height: 4px; transform: translateY(-50%);
+    border-radius: 50%; background: var(--panel-edge);
+  }
+
+  .project .desc { color: var(--paper); margin-bottom: 18px; }
+
+  .project .role { font-family: var(--display); font-size: 15px; color: var(--paper); margin-bottom: 20px; }
+  .project .role b { font-family: var(--mono); font-weight: 700; color: var(--muted); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+
+  /* what I did */
+  .project .did .label { font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .project .did ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .project .did li { position: relative; padding-left: 20px; font-size: 16px; line-height: 1.5; }
+  .project .did li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 6px; height: 6px; border-radius: 50%; }
+  .p1 .did li::before { background: var(--p1); }
+  .p2 .did li::before { background: var(--p2); }
+
+  .project .links { margin-top: 0; display: flex; gap: 18px; }
+  .project .links a {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em;
+    text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .p1 .links a { color: var(--p1); }
+  .p2 .links a { color: var(--p2); }
+  .project .links a:hover { border-bottom-color: currentColor; }
+
+  /* ---------------- ABOUT ---------------- */
+  .about p { max-width: 660px; margin-bottom: 18px; }
+  .about p:last-child { margin-bottom: 0; }
+
+  /* ---------------- CONDENSED PROJECTS (tier 2) ---------------- */
+  .mini-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .mini-grid.three { grid-template-columns: repeat(3, 1fr); }
+  .mini {
+    background: var(--panel); border: 1px solid var(--panel-edge);
+    border-radius: 4px; overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .mini:hover { transform: translateY(-3px); border-color: var(--muted); }
+  .mini .thumb {
+    width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;
+    border-bottom: 1px solid var(--panel-edge); background: #0f0e14;
+  }
+  .mini .mini-body { padding: 18px 20px 20px; }
+  .mini h4 { font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: -0.01em; margin-bottom: 7px; }
+  .mini .mini-meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .mini p { font-size: 15px; line-height: 1.5; color: var(--paper); margin-bottom: 14px; }
+  .mini .links a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--p2); text-decoration: none; margin-right: 16px; border-bottom: 1px solid transparent; padding-bottom: 2px; transition: border-color 0.2s; }
+  .mini .links a:hover { border-bottom-color: currentColor; }
+  .mini .wx-label { font-family: var(--mono); font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 16px 0 9px; }
+  .mini .wx-role ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .mini .wx-role li { position: relative; padding-left: 16px; font-size: 14px; line-height: 1.5; color: var(--paper); }
+  .mini .wx-role li::before { content: ""; position: absolute; left: 2px; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--p2); }
+  .mini .links { margin-top: 16px; }
+  .mini .links .btn { display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--paper); text-decoration: none; padding: 9px 16px; border: 1px solid var(--panel-edge); border-radius: 3px; transition: border-color 0.2s, color 0.2s; }
+  .mini .links .btn:hover { border-color: var(--p2); color: var(--p2); }
+
+  /* ---------------- WORK EXPERIENCE (tier 3) ---------------- */
+  .exp {
+    display: grid; grid-template-columns: 170px 1fr; gap: 30px;
+    padding: 26px 0; border-bottom: 1px solid var(--panel-edge);
+  }
+  .exp:last-child { border-bottom: none; padding-bottom: 0; }
+  .exp .when { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+  .exp h4 { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .exp .org { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 12px; }
+  .exp p { font-size: 16px; color: var(--paper); max-width: 640px; margin-bottom: 0; }
+  .exp .links { margin-top: 12px; }
+  .exp .links a { font-family: var(--mono); font-size: 12px; color: var(--p1); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  .exp .links a:hover { border-bottom-color: currentColor; }
+
+  /* ---------------- CONTACT ---------------- */
+  .contact .links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; justify-content: center; }
+  .contact .links a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; color: var(--paper);
+    border: 1px solid var(--panel-edge); border-radius: 6px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact .links a:hover { border-color: var(--p2); color: var(--p2); }
+  .contact .links a svg { width: 20px; height: 20px; }
+
+  /* ---------------- FOOTER ---------------- */
+  footer { padding: 50px 0; border-top: 1px solid var(--panel-edge); }
+  footer .hud { text-align: center; }
+
+  /* ---------------- REVEAL ---------------- */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .project:hover { transform: none; }
+  }
+
+  /* ---------------- MOBILE ---------------- */
+  @media (max-width: 760px) {
+    body { font-size: 17px; }
+    nav .links { gap: 16px; }
+    .hero { grid-template-columns: 1fr; gap: 30px; padding-top: 72px; }
+    .hero .portrait { max-width: 200px; order: -1; }
+    .project, .project.flip {
+      grid-template-columns: 1fr;
+      grid-template-areas: "media" "intro" "did" "links";
+      gap: 22px;
+    }
+    .mini-grid.three { grid-template-columns: repeat(2, 1fr); }
+    .exp { grid-template-columns: 1fr; gap: 8px; }
+  }
+  @media (max-width: 520px) {
+    .mini-grid, .mini-grid.three { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ============ NAV ============ -->
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="name" href="#top">Sadaf Nezam Portfolio</a>
+      <div class="links">
+        <a href="#work">Projects</a>
+        <a href="resume.html">Resume</a>
+        <a href="about.html">About Me</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero wrap">
+    <div class="intro reveal">
+      <h1>Sadaf Nezameddini</h1>
+      <div class="role-title">Game Developer and Designer</div>
+      <p>I'm a game developer working across programming and design, recently graduated in Game Science and Design from Northeastern University, and my undergraduate background was in film studies and storytelling. I work mainly in game engines Unity/Unreal, building gameplay systems, game AI, player mechanics, and designing levels and the core gameplay loop.</p>
+    </div>
+  </section>
+
+  <!-- ============ WORK ============ -->
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Highlighted Projects</h2>
+        <div class="rule"></div>
+      </div>
+
+      <!-- ========== PROJECT 1: DEBT RUSH ========== -->
+      <article class="project p2 flip reveal">
+
+        <video class="media" autoplay loop muted playsinline
+               aria-label="Debt Rush gameplay">
+          <source src="debtrush.mp4" type="video/mp4">
+        </video>
+
+        <div class="intro">
+          <h3>Debt Rush</h3>
+          <div class="meta">
+            <span>Spring 2026</span>
+            <span>Capstone project</span>
+            <span>3-member team</span>
+            <span>Unity</span>
+          </div>
+          <p class="desc">A co-op top-down action game where two partners manage a shared budget to survive the debt collectors and escape the city.</p>
+          <p class="role"><b>My role</b>Developer - Designer - UX Research</p>
+        </div>
+
+        <div class="did">
+          <div class="label">What I did</div>
+          <ul>
+            <li>Implemented local multiplayer input with per-device control schemes via the Input System, supporting both keyboard/mouse and gamepads.</li>
+            <li>Built the shop and inventory UI with Unity UI Toolkit (UXML/USS/C#), and designed the menu and HUD layouts.</li>
+            <li>Designed and implemented the weapon system and mechanics, including equip, aim, fire, and collision detection.</li>
+            <li>Implemented enemy AI behaviors including movement constraints, target detection, and state handling.</li>
+            <li>Designed the city map with distinct urban and suburban regions, placing enemies, NPCs, and loot, and using the suburban area as the tutorial space.</li>
+            <li>Conducted playtesting sessions with usability surveys, and used the findings to improve UI feedback and gameplay clarity.</li>
+          </ul>
+        </div>
+
+        <div class="links">
+          <a href="https://github.com/akshar-23/Debt-Rush" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.youtube.com/watch?v=60bzJhksNKw" target="_blank" rel="noopener">Demo</a>
+        </div>
+      </article>
+
+      <!-- ========== PROJECT 2: THE UP-GRADER (flip = media on right) ========== -->
+      <article class="project p1 flip reveal">
+
+        <!-- Up-Grader footage. File: upgrader.mp4 (must be uploaded to the repo too).
+             It autoplays, loops, and is muted, so it behaves just like a gif. -->
+        <video class="media" autoplay loop muted playsinline
+               aria-label="The Up-Grader gameplay">
+          <source src="upgrader.mp4" type="video/mp4">
+        </video>
+
+        <div class="intro">
+          <h3>The Up-Grader</h3>
+          <!-- meta line: edit each piece of text -->
+          <div class="meta">
+            <span>Spring 2025</span>
+            <span>Course project</span>
+            <span>5-member team</span>
+            <span>Unity</span>
+          </div>
+          <p class="desc">A 2D Metroidvania platformer where you play as a broken little robot looking for its missing pieces to build itself back together, but every upgrade comes at a cost.</p>
+          <p class="role"><b>My role</b>Gameplay Programmer - System Designer - Level Designer</p>
+        </div>
+
+        <div class="did">
+          <div class="label">What I did</div>
+          <ul>
+            <li>Programmed core gameplay systems using Unity Visual Scripting, including combat logic, enemy behavior, player movement, abilities, and progression.</li>
+            <li>Implemented ranged enemy AI with chase, positioning, attack, and leash-back behavior.</li>
+            <li>Designed and implemented tiered enemy types with escalating speed, damage, fire rate, and increasingly complex shooting patterns.</li>
+            <li>Designed loot and enemy systems, defining drop tables and stat differences across enemy and weapon types.</li>
+            <li>Implemented the checkpoint system with player death and respawn logic.</li>
+            <li>Designed the level layout, from blockout to tile painting, and placement of enemies, resources, and checkpoints across the map.</li>
+          </ul>
+        </div>
+
+        <div class="links">
+          <a href="https://sadafnezam.itch.io/the-upgrader">itch.io</a>
+          <a href="https://github.com/sadafnezam/The-Upgrader">GitHub</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ MORE PROJECTS (tier 2: condensed) ============ -->
+  <section class="section" id="more">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>More Projects</h2>
+        <div class="rule"></div>
+      </div>
+
+      <div class="mini-grid three">
+
+        <!-- MINI 1: Classroom 404 -->
+        <article class="mini reveal">
+          <video class="thumb" autoplay loop muted playsinline aria-label="Classroom 404">
+            <source src="classroom404.mp4" type="video/mp4">
+          </video>
+          <div class="mini-body">
+            <h4>Classroom 404</h4>
+            <div class="mini-meta" style="white-space:nowrap;">Nov–Dec 2024 | 2-person team | Unity 3D</div>
+            <p>A first-person puzzle game that aims to capture the familiar intense experience of rushing between classes.</p>
+            <div class="links">
+              <a href="https://nianyi-wang.itch.io/classroom-404" target="_blank" rel="noopener">itch.io</a>
+              <a href="https://www.youtube.com/watch?v=8zsTWFdrohA" target="_blank" rel="noopener">Playthrough</a>
+              <a href="https://github.com/Nianyi-GSND-Projects/Classroom-404" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- MINI 2: Patterns, Please -->
+        <article class="mini reveal">
+          <video class="thumb" autoplay loop muted playsinline aria-label="Patterns, Please">
+            <source src="patterns-please.mp4" type="video/mp4">
+          </video>
+          <div class="mini-body">
+            <h4>Patterns, Please</h4>
+            <div class="mini-meta">Oct 2024 | 4-member team | Tabletop Simulator</div>
+            <p>A board game inspired by "Papers, Please," aiming to replicate its core gameplay in a paper prototype version.</p>
+            <div class="links">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3351722654" target="_blank" rel="noopener">Workshop</a>
+              <a href="https://www.youtube.com/watch?v=Zgs27QxyBtw" target="_blank" rel="noopener">Playthrough</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- MINI 3: Bacteria -->
+        <article class="mini reveal">
+          <video class="thumb" autoplay loop muted playsinline aria-label="Bacteria">
+            <source src="bacteria.mp4" type="video/mp4">
+          </video>
+          <div class="mini-body">
+            <h4>Bacteria</h4>
+            <div class="mini-meta">Sep 2024 | 4-member team | Unity 2D</div>
+            <p>A top-down survival game where players live the final moments of the last dying bacterium on a lab plate.</p>
+            <div class="links">
+              <a href="https://github.com/KaneZedak/Bacteria/blob/main/Builds.zip" target="_blank" rel="noopener">Playable Build</a>
+              <a href="https://github.com/KaneZedak/Bacteria" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- MINI 4: The Rhythm Project -->
+        <article class="mini reveal">
+          <video class="thumb" autoplay loop muted playsinline aria-label="The Rhythm Project">
+            <source src="rhythm.mp4" type="video/mp4">
+          </video>
+          <div class="mini-body">
+            <h4>The Rhythm Project</h4>
+            <div class="mini-meta">Feb 2025 | 5-member team | Unity 2D</div>
+            <p>A 2D top-down rhythm shooter where players must shoot enemies in sync with the beat.</p>
+            <div class="links">
+              <a href="https://sadafnezam.itch.io/the-rhythm-project" target="_blank" rel="noopener">itch.io</a>
+              <a href="https://github.com/Bruggles718/GSND4000-Team-2-Project-7" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- MINI 5: Sweet Escape -->
+        <article class="mini reveal">
+          <img class="thumb" alt="Sweet Escape" src="sweet-escape.png">
+          <div class="mini-body">
+            <h4>Sweet Escape</h4>
+            <div class="mini-meta">Jan 2025 | 5-member team | Unity 2D</div>
+            <p>A 2D pixel-art platformer where you gain new abilities by collecting more cookies.</p>
+            <div class="links">
+              <a href="https://kuroneko233333.itch.io/project-5" target="_blank" rel="noopener">itch.io</a>
+              <a href="https://github.com/Bruggles718/GSND4000-Team-2-Project-5" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- MINI 6: Die if You Can -->
+        <article class="mini reveal">
+          <video class="thumb" autoplay loop muted playsinline aria-label="Die if You Can">
+            <source src="die-if-you-can.mp4" type="video/mp4">
+          </video>
+          <div class="mini-body">
+            <h4>Die if You Can</h4>
+            <div class="mini-meta">Jan 2024 | 2-member team | Unreal | Game jam project</div>
+            <p>A first-person humorous puzzle game where the goal of each level is to die by falling, but the world won't let you.</p>
+            <div class="links">
+              <a href="https://rmangames.itch.io/die-if-you-can" target="_blank" rel="noopener">itch.io</a>
+              <a href="https://globalgamejam.org/games/2024/die-if-you-can-8" target="_blank" rel="noopener">GGJ</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EARLIER WORK EXPERIENCE (tier 3) ============ -->
+  <section class="section" id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Earlier Work Experience</h2>
+        <div class="rule"></div>
+      </div>
+
+      <div class="mini-grid">
+
+        <!-- Nounishpunk -->
+        <article class="mini reveal">
+          <img class="thumb" alt="Nounishpunk" src="nounishpunk.jpg">
+          <div class="mini-body">
+            <h4>Nounishpunk</h4>
+            <div class="mini-meta">Feb 2024 - Apr 2024 | Contract | Environment Designer</div>
+            <p>An action-adventure game set in a vibrant open-world city with a fantasy futuristic art style.</p>
+            <div class="wx-role">
+              <div class="wx-label">My role</div>
+              <ul>
+                <li>Extended the open-world city map, designing new zones integrated with the existing areas.</li>
+                <li>Implemented level designs in Unreal Engine and playtested for accessibility across different player movement types.</li>
+                <li>Built layered navigation routes for added exploration depth, designed to stay flexible for future features and missions.</li>
+              </ul>
+            </div>
+            <div class="links">
+              <a class="btn" href="https://store.steampowered.com/app/2568760/Nounishpunk/" target="_blank" rel="noopener">View on Steam</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Javanmardan -->
+        <article class="mini reveal">
+          <img class="thumb" alt="Javanmardan" src="javanmardan.jpg">
+          <div class="mini-body">
+            <h4>Javanmardan</h4>
+            <div class="mini-meta">Jan 2023 - Aug 2023 | Full-Time | Cinematic Artist</div>
+            <p>A 3D animated series with heroic, historical themes, following a group of heroes through a fictional past.</p>
+            <div class="wx-role">
+              <div class="wx-label">My role</div>
+              <ul>
+                <li>Created cinematics for eight episodes in Unreal Engine, handling camera, blocking, environment, and lighting in collaboration with directors.</li>
+                <li>Worked on full scene assembly through to final render, including particles and post-process effects.</li>
+                <li>Worked within a studio production pipeline using Jira and SVN version control.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section contact" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Contact</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="links">
+        <a href="mailto:sadaf.nzm@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></a>
+        <a href="https://github.com/sadafnezam" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.21 11.19.6.11.82-.25.82-.56v-2.03c-3.34.71-4.04-1.58-4.04-1.58-.55-1.36-1.34-1.72-1.34-1.72-1.09-.73.08-.72.08-.72 1.21.08 1.84 1.21 1.84 1.21 1.07 1.79 2.81 1.27 3.5.97.11-.76.42-1.27.76-1.56-2.67-.3-5.47-1.3-5.47-5.79 0-1.28.47-2.32 1.24-3.14-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.2.96-.26 1.98-.39 3-.4 1.02.01 2.04.14 3 .4 2.29-1.52 3.3-1.2 3.3-1.2.66 1.65.24 2.87.12 3.17.77.82 1.24 1.86 1.24 3.14 0 4.5-2.81 5.48-5.49 5.78.43.36.81 1.08.81 2.18v3.23c0 .31.22.68.83.56C20.56 21.91 24 17.5 24 12.29 24 5.78 18.63.5 12 .5z"/></svg></a>
+        <a href="https://sadafnezam.itch.io" target="_blank" rel="noopener" aria-label="itch.io" title="itch.io"><svg viewBox="0 0 512 512" fill="currentColor"><path d="M71.92 34.77C50.2 47.67 7.4 96.84 7 109.73v21.34c0 27.06 25.29 50.84 48.25 50.84 27.57 0 50.54-22.85 50.54-50 0 27.12 22.18 50 49.76 50s49-22.85 49-50c0 27.12 23.59 50 51.16 50h.5c27.57 0 51.16-22.85 51.16-50 0 27.12 21.47 50 49 50s49.76-22.85 49.76-50c0 27.12 23 50 50.54 50 23 0 48.25-23.78 48.25-50.84v-21.34c-.4-12.9-43.2-62.07-64.92-75C372.56 32.4 325.76 32 256 32S91.14 33.1 71.92 34.77zm132.32 134.39c-22 38.4-77.9 38.71-99.85.25-13.17 23.14-43.17 32.07-56 27.66-3.87 40.15-13.67 237.13 17.73 269.15 80 18.67 302.08 18.12 379.76 0 31.65-32.27 21.32-232 17.75-269.15-12.92 4.44-42.88-4.6-56-27.66-22 38.52-77.85 38.1-99.85-.24-7.1 12.49-23.05 28.94-51.76 28.94a57.54 57.54 0 0 1-51.75-28.94zm-41.58 53.77c16.47 0 31.09 0 49.22 19.78a436.91 436.91 0 0 1 88.18 0C318.22 223 332.85 223 349.31 223c52.33 0 65.22 77.53 83.87 144.45 17.26 62.15-5.52 63.67-33.95 63.73-42.15-1.57-65.49-32.18-65.49-62.79-39.25 6.43-101.93 8.79-155.55 0 0 30.61-23.34 61.22-65.49 62.79-28.42-.06-51.2-1.58-33.94-63.73 18.67-67 31.56-144.45 83.88-144.45zM256 270.79s-44.38 40.77-52.35 55.21l29-1.17v25.32c0 1.55 21.34.16 23.33.16 11.65.54 23.31 1 23.31-.16v-25.28l29 1.17c-8-14.48-52.35-55.24-52.35-55.24z"/></svg></a>
+        <a href="https://www.linkedin.com/in/sadaf-nezameddini/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="hud">© 2026 Sadaf Nezameddini</div>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
