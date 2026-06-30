@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ===== EDIT THIS: the browser tab title ===== -->
+<title>The Up-Grader — Sadaf Nezameddini</title>
+
+<!-- ===== Social / link-preview tags (Open Graph + Twitter) ===== -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sadaf Nezameddini">
+<meta property="og:title" content="Sadaf Nezameddini — Game Developer & Designer">
+<meta property="og:description" content="Game developer and designer working in Unity and Unreal. Selected projects, work experience, and resume.">
+<meta property="og:url" content="https://sadafnezam.github.io/">
+<meta property="og:image" content="https://sadafnezam.github.io/thumbnail.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sadaf Nezameddini — Game Developer & Designer">
+<meta name="twitter:description" content="Game developer and designer working in Unity and Unreal. Selected projects, work experience, and resume.">
+<meta name="twitter:image" content="https://sadafnezam.github.io/thumbnail.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:        #131119;
+    --panel:      #1c1a25;
+    --panel-edge: #2c2937;
+    --paper:      #ece8e0;
+    --muted:      #8d889b;
+    --p1:         #ff8a5b;
+    --p2:         #57d2cd;
+
+    --display: 'Space Grotesk', sans-serif;
+    --body:    'Newsreader', Georgia, serif;
+    --mono:    'Space Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--ink);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7'%3E%3Cpath d='M0 0L7 7M0 7L7 0' fill='none' stroke='%23ffffff' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E"),
+      radial-gradient(1100px 620px at 8% -10%, rgba(255,138,91,0.12), transparent 60%),
+      radial-gradient(950px 620px at 100% -8%, rgba(87,210,205,0.10), transparent 58%);
+    background-size: 7px 7px, 100% 100%, 100% 100%;
+    background-repeat: repeat, no-repeat, no-repeat;
+    background-attachment: scroll, fixed, fixed;
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 18px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+
+  .hud {
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ---------------- NAV ---------------- */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(19,17,25,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--panel-edge);
+  }
+  nav { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+  nav .name {
+    font-family: var(--display); font-weight: 700;
+    font-size: 17px; letter-spacing: -0.01em;
+    color: var(--paper); text-decoration: none;
+  }
+  nav .links { display: flex; gap: 26px; }
+  nav .links a {
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  nav .links a:hover { color: var(--paper); }
+
+  /* ---------------- HERO ---------------- */
+  .hero {
+    padding: 100px 28px 84px;
+  }
+  .hero h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(32px, 4.4vw, 50px);
+    line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 12px;
+  }
+  .hero .role-title {
+    font-family: var(--display); font-weight: 500;
+    font-size: clamp(18px, 2.2vw, 24px);
+    letter-spacing: -0.01em; color: var(--p1); margin-bottom: 25px;
+  }
+  .hero p { font-size: clamp(16px, 1.6vw, 17.5px); max-width: none; color: var(--paper); line-height: 1.55; text-align: justify; }
+  .hero p .dim { color: var(--muted); }
+  .hero .portrait {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 4px; border: 1px solid var(--panel-edge); background: #0f0e14;
+  }
+
+  /* ---------------- SECTION HEADS ---------------- */
+  .section { padding: 70px 0; border-top: 1px solid var(--panel-edge); }
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 44px; }
+  .section-head h2 {
+    font-family: var(--display); font-weight: 500;
+    font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--paper);
+  }
+  .section-head .rule { flex: 1; height: 1px; background: var(--panel-edge); }
+
+  /* ---------------- PROJECT CARD ---------------- */
+  .project {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+    grid-template-areas:
+      "media intro"
+      "did   did"
+      "links links";
+    gap: 24px 38px; align-items: start;
+    padding: 30px; margin-bottom: 30px;
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: 4px;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .project:hover { transform: translateY(-3px); }
+  .project.p1:hover { border-color: var(--p1); }
+  .project.p2:hover { border-color: var(--p2); }
+
+  .project .media { grid-area: media; }
+  .project .intro { grid-area: intro; }
+  .project .did   { grid-area: did; }
+  .project .links { grid-area: links; }
+
+  /* media (the gif/video) */
+  .project .media {
+    width: 100%; aspect-ratio: 16 / 9;
+    object-fit: cover; display: block;
+    border-radius: 3px; border: 1px solid var(--panel-edge);
+    background: #0f0e14;
+  }
+  /* flip = media on the right (used on alternating cards) */
+  .project.flip {
+    grid-template-areas:
+      "intro media"
+      "did   did"
+      "links links";
+  }
+
+  .project .tag {
+    display: inline-block; padding: 4px 10px; margin-bottom: 16px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; border-radius: 3px;
+  }
+  .p1 .tag { color: var(--p1); border: 1px solid var(--p1); }
+  .p2 .tag { color: var(--p2); border: 1px solid var(--p2); }
+
+  .project h3 {
+    font-family: var(--display); font-weight: 700;
+    font-size: 30px; letter-spacing: -0.02em; margin-bottom: 12px;
+  }
+
+  /* meta line: dates / team / engine */
+  .project .meta { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-bottom: 16px; }
+  .project .meta span {
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.02em; color: var(--muted);
+  }
+  .project .meta span + span { position: relative; padding-left: 12px; }
+  .project .meta span + span::before {
+    content: ""; position: absolute; left: 0; top: 50%;
+    width: 4px; height: 4px; transform: translateY(-50%);
+    border-radius: 50%; background: var(--panel-edge);
+  }
+
+  .project .desc { color: var(--paper); margin-bottom: 18px; }
+
+  .project .role { font-family: var(--display); font-size: 15px; color: var(--paper); margin-bottom: 20px; }
+  .project .role b { font-family: var(--mono); font-weight: 700; color: var(--muted); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+
+  /* what I did */
+  .project .did .label { font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .project .did ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .project .did li { position: relative; padding-left: 20px; font-size: 16px; line-height: 1.5; }
+  .project .did li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 6px; height: 6px; border-radius: 50%; }
+  .p1 .did li::before { background: var(--p1); }
+  .p2 .did li::before { background: var(--p2); }
+
+  .project .links { margin-top: 0; display: flex; gap: 18px; }
+  .project .links a {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em;
+    text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .p1 .links a { color: var(--p1); }
+  .p2 .links a { color: var(--p2); }
+  .project .links a:hover { border-bottom-color: currentColor; }
+
+  /* ---------------- ABOUT ---------------- */
+  .about p { max-width: 660px; margin-bottom: 18px; }
+  .about p:last-child { margin-bottom: 0; }
+
+  /* ---------------- CONDENSED PROJECTS (tier 2) ---------------- */
+  .mini-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .mini-grid.three { grid-template-columns: repeat(3, 1fr); }
+  .mini {
+    background: var(--panel); border: 1px solid var(--panel-edge);
+    border-radius: 4px; overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .mini:hover { transform: translateY(-3px); border-color: var(--muted); }
+  .mini .thumb {
+    width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;
+    border-bottom: 1px solid var(--panel-edge); background: #0f0e14;
+  }
+  .mini .mini-body { padding: 18px 20px 20px; }
+  .mini h4 { font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: -0.01em; margin-bottom: 7px; }
+  .mini .wx-position { font-family: var(--display); font-weight: 500; font-size: 15px; color: var(--p1); margin: -2px 0 7px; }
+  .mini .mini-meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .mini p { font-size: 15px; line-height: 1.5; color: var(--paper); margin-bottom: 14px; }
+  .mini .links a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--p2); text-decoration: none; margin-right: 16px; border-bottom: 1px solid transparent; padding-bottom: 2px; transition: border-color 0.2s; }
+  .mini .links a:hover { border-bottom-color: currentColor; }
+  .mini .wx-label { font-family: var(--mono); font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 16px 0 9px; }
+  .mini .wx-role ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .mini .wx-role li { position: relative; padding-left: 16px; font-size: 14px; line-height: 1.5; color: var(--paper); }
+  .mini .wx-role li::before { content: ""; position: absolute; left: 2px; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--p2); }
+  .mini .links { margin-top: 16px; }
+  .mini .links .btn { display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--paper); text-decoration: none; padding: 9px 16px; border: 1px solid var(--panel-edge); border-radius: 3px; transition: border-color 0.2s, color 0.2s; }
+  .mini .links .btn:hover { border-color: var(--p2); color: var(--p2); }
+
+  /* ---------------- WORK EXPERIENCE (tier 3) ---------------- */
+  .exp {
+    display: grid; grid-template-columns: 170px 1fr; gap: 30px;
+    padding: 26px 0; border-bottom: 1px solid var(--panel-edge);
+  }
+  .exp:last-child { border-bottom: none; padding-bottom: 0; }
+  .exp .when { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+  .exp h4 { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .exp .org { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 12px; }
+  .exp p { font-size: 16px; color: var(--paper); max-width: 640px; margin-bottom: 0; }
+  .exp .links { margin-top: 12px; }
+  .exp .links a { font-family: var(--mono); font-size: 12px; color: var(--p1); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  .exp .links a:hover { border-bottom-color: currentColor; }
+
+  /* ---------------- CONTACT ---------------- */
+  .contact .links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; justify-content: center; }
+  .contact .links a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; color: var(--paper);
+    border: 1px solid var(--panel-edge); border-radius: 6px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact .links a:hover { border-color: var(--p2); color: var(--p2); }
+  .contact .links a svg { width: 20px; height: 20px; }
+
+  /* ---------------- FOOTER ---------------- */
+  footer { padding: 50px 0; border-top: 1px solid var(--panel-edge); }
+  footer .hud { text-align: center; }
+
+  /* ---------------- REVEAL ---------------- */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .project:hover { transform: none; }
+  }
+
+  /* ---------------- MOBILE ---------------- */
+  @media (max-width: 760px) {
+    body { font-size: 17px; }
+    nav .links { gap: 16px; }
+    .hero { grid-template-columns: 1fr; gap: 30px; padding-top: 72px; }
+    .hero .portrait { max-width: 200px; order: -1; }
+    .project, .project.flip {
+      grid-template-columns: 1fr;
+      grid-template-areas: "media" "intro" "did" "links";
+      gap: 22px;
+    }
+    .mini-grid.three { grid-template-columns: repeat(2, 1fr); }
+    .exp { grid-template-columns: 1fr; gap: 8px; }
+  }
+  @media (max-width: 520px) {
+    .mini-grid, .mini-grid.three { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    nav { flex-direction: column; align-items: flex-start; height: auto; padding: 12px 0; gap: 10px; }
+    nav .name { font-size: 16px; white-space: nowrap; }
+    nav .links { gap: 18px; flex-wrap: wrap; }
+    nav .links a { font-size: 12px; letter-spacing: 0.05em; white-space: nowrap; }
+  }
+</style>
+
+<style>
+  /* ===== Project case-study page ===== */
+  .proj-wrap { max-width: 980px; margin: 0 auto; padding: 108px 28px 60px; }
+  .back-link { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); text-decoration: none; }
+  .back-link:hover { color: var(--p2); }
+  .proj-head { margin: 22px 0 34px; }
+  .proj-head h1 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4.6vw, 48px); letter-spacing: -0.02em; }
+  .proj-head .meta { display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 14px 0; }
+  .proj-head .role { font-family: var(--display); font-weight: 500; color: var(--p1); font-size: 16px; margin-bottom: 14px; }
+  .proj-head .desc { font-family: var(--body); font-size: clamp(17px, 2vw, 19px); line-height: 1.6; color: var(--paper); max-width: 760px; }
+  .proj-head .links { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
+  .proj-head .links a { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--paper); border: 1px solid var(--panel-edge); padding: 9px 16px; border-radius: 4px; text-decoration: none; transition: all 0.2s; }
+  .proj-head .links a:hover { border-color: var(--p2); color: var(--p2); }
+
+  .proj-body p { font-family: var(--body); font-size: 17px; line-height: 1.7; color: var(--paper); margin: 0 0 18px; max-width: 780px; }
+  .proj-body ul { list-style: none; margin: 0 0 22px; padding: 0; max-width: 780px; }
+  .proj-body li { position: relative; padding-left: 18px; margin-bottom: 11px; font-family: var(--body); font-size: 17px; line-height: 1.6; color: var(--paper); }
+  .proj-body li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--p2); }
+  .proj-body li b { color: var(--p1); font-weight: 600; }
+
+  figure { margin: 30px 0; max-width: 780px; }
+  .media-ph { background: var(--panel); border: 1px dashed var(--panel-edge); border-radius: 10px; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; color: var(--muted); font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .media-vid { width: 100%; display: block; border-radius: 10px; background: var(--panel); }
+  .media-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  figcaption { font-family: var(--body); font-style: italic; color: var(--muted); font-size: 14.5px; line-height: 1.5; text-align: center; margin-top: 11px; max-width: 760px; margin-left: auto; margin-right: auto; }
+  @media (max-width: 600px) { .media-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="name" href="index.html#top">Sadaf Nezam Portfolio</a>
+      <div class="links">
+        <a href="index.html#work">Projects</a>
+        <a href="resume.html">Resume</a>
+        <a href="about.html">About Me</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="proj-wrap">
+    <a class="back-link" href="index.html#work">&larr; Projects</a>
+
+    <div class="proj-head">
+      <h1>The Up-Grader</h1>
+      <div class="meta"><span>Spring 2025</span><span>Course project</span><span>5-member team</span><span>Unity</span></div>
+      <p class="role">Gameplay Programmer &middot; System Designer &middot; Level Designer</p>
+      <p class="desc">A 2D Metroidvania platformer where you play as a broken little robot looking for its missing pieces to build itself back together, but every upgrade comes at a cost.</p>
+      <div class="links">
+        <a href="https://sadafnezam.itch.io/the-upgrader" target="_blank" rel="noopener">itch.io</a>
+        <a href="https://github.com/sadafnezam/The-Upgrader" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <p>The focus of this project was designing an interconnected progression and economy system. The character is a small robot missing most of its parts, and it rebuilds itself by taking in each piece it finds. Every weapon and ability is a modular piece that can be attached, detached, or swapped at any time, and this modularity is what the whole upgrade and inventory system is built on.</p>
+
+      <p>You start with a basic weapon, limited movement, and access to only a small part of the map. From there, the progression builds through a few connected systems:</p>
+      <ul>
+        <li><b>Abilities:</b> each ability stone gives you a new movement ability. You need to explore to find them.</li>
+        <li><b>Map:</b> each new ability opens up new parts of the map and lets you climb higher.</li>
+        <li><b>Enemies:</b> as you progress further, enemies grow stronger in both movement freedom and attack patterns, and bigger enemies are more likely to drop better loot.</li>
+        <li><b>Weapons:</b> loot is randomly either a weapon or a buff. Stronger weapons let you take down tougher enemies and reach further.</li>
+        <li><b>Code stations:</b> these are checkpoints scattered across the map. You always respawn at the last one you checked in at, and each check-in stacks a debuff on the final boss. It's up to the player whether to speedrun straight to the boss or take the time to explore and weaken it first.</li>
+      </ul>
+
+      <figure>
+        <video class="media-vid" autoplay loop muted playsinline><source src="upgrader-1.mp4" type="video/mp4"></video>
+        <figcaption>The player gets a stronger gun as loot, equips it, and takes down the next enemy in one shot.</figcaption>
+      </figure>
+
+      <p>The level is designed in a way that you always need to go up. The player often catches glimpses of what's available above, which encourages them to keep climbing. Higher areas require abilities you don't have yet, so progression is gated by your abilities unlocked. The final boss sits at the highest point of the map.</p>
+
+      <figure>
+        <video class="media-vid" autoplay loop muted playsinline><source src="upgrader-4.mp4" type="video/mp4"></video>
+        <figcaption>The final boss has the best traits of all earlier enemies, with more freedom in movement and attack patterns.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="media-row">
+          <video class="media-vid" autoplay loop muted playsinline><source src="upgrader-2.mp4" type="video/mp4"></video>
+          <video class="media-vid" autoplay loop muted playsinline><source src="upgrader-3.mp4" type="video/mp4"></video>
+        </div>
+        <figcaption>Switching between Double Jump (DJ) and Glide (GL) in the inventory to get past platforming that needs both.</figcaption>
+      </figure>
+
+      <p>The player inventory works on a slot tradeoff system, where health acts as the anchor resource that every other resource is tied to. In the inventory, equipping any item such as weapons, abilities, or buffs takes up part of the health.</p>
+
+      <p>The boss runs on the same rule: checking in at each code station takes up part of the boss's health, and if you check in at all of them, the boss is down to 50% health by the time you reach it.</p>
+
+      <figure>
+        <video class="media-vid" autoplay loop muted playsinline><source src="upgrader-5.mp4" type="video/mp4"></video>
+        <figcaption>Equipping a weapon or ability takes up slots from the player's health on the top bar.</figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="hud">© 2026 Sadaf Nezameddini</div>
+  </div>
+</footer>
+
+</body>
+</html>

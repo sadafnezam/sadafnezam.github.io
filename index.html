@@ -276,6 +276,9 @@
   }
 
   /* ---------------- MOBILE ---------------- */
+  .project[data-href] { cursor: pointer; }
+  .project[data-href] h3 { transition: color 0.2s; }
+  .project[data-href]:hover h3 { color: var(--p1); }
   @media (max-width: 760px) {
     body { font-size: 17px; }
     nav .links { gap: 16px; }
@@ -376,7 +379,7 @@
       </article>
 
       <!-- ========== PROJECT 2: THE UP-GRADER (flip = media on right) ========== -->
-      <article class="project p1 flip reveal">
+      <article class="project p1 flip reveal" data-href="upgrader.html">
 
         <!-- Up-Grader footage. File: upgrader.mp4 (must be uploaded to the repo too).
              It autoplays, loops, and is muted, so it behaves just like a gif. -->
@@ -614,5 +617,13 @@
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 
+<script>
+  document.querySelectorAll('[data-href]').forEach(function(card){
+    card.addEventListener('click', function(e){
+      if (e.target.closest('a, button')) return;  // let itch.io / GitHub links work
+      window.location.href = card.getAttribute('data-href');
+    });
+  });
+</script>
 </body>
 </html>
