@@ -278,7 +278,8 @@
   /* ---------------- MOBILE ---------------- */
   .project[data-href] { cursor: pointer; }
   .project[data-href] h3 { transition: color 0.2s; }
-  .project[data-href]:hover h3 { color: var(--p1); }
+  .project.p1[data-href]:hover h3 { color: var(--p1); }
+  .project.p2[data-href]:hover h3 { color: var(--p2); }
   @media (max-width: 760px) {
     body { font-size: 17px; }
     nav .links { gap: 16px; }
@@ -341,7 +342,7 @@
       </div>
 
       <!-- ========== PROJECT 1: DEBT RUSH ========== -->
-      <article class="project p2 flip reveal">
+      <article class="project p2 flip reveal" data-href="debtrush.html">
 
         <video class="media" autoplay loop muted playsinline
                aria-label="Debt Rush gameplay">
