@@ -118,6 +118,7 @@
 
   /* ---------------- PROJECT CARD ---------------- */
   .project {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
     grid-template-areas:
@@ -280,6 +281,17 @@
   .project[data-href] h3 { transition: color 0.2s; }
   .project.p1[data-href]:hover h3 { color: var(--p1); }
   .project.p2[data-href]:hover h3 { color: var(--p2); }
+  .readmore {
+    display: inline-block;
+    font-family: var(--mono); font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;
+    text-decoration: none;
+    margin-left: auto;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .project.p1 .readmore:hover { color: var(--p1); }
+  .project.p2 .readmore:hover { color: var(--p2); }
   @media (max-width: 760px) {
     body { font-size: 17px; }
     nav .links { gap: 16px; }
@@ -329,7 +341,7 @@
     <div class="intro reveal">
       <h1>Sadaf Nezameddini</h1>
       <div class="role-title">Game Developer and Designer</div>
-      <p>I'm a game developer working across programming and design, recently graduated in Game Science and Design from Northeastern University, and my undergraduate background was in film studies and storytelling. I work mainly in game engines Unity/Unreal, building gameplay systems, game AI, player mechanics, and designing levels and the core gameplay loop.</p>
+      <p>I'm a game developer working across programming and design, recently graduated in Game Science and Design from Northeastern University, and my undergraduate background was in film studies and storytelling. I work mainly in game engines both Unity and Unreal, building gameplay systems, game AI, player mechanics, and designing levels and the core gameplay loop.</p>
     </div>
   </section>
 
@@ -377,6 +389,7 @@
           <a href="https://sebastiansalas94.itch.io/debt-rush" target="_blank" rel="noopener">itch.io</a>
           <a href="https://github.com/akshar-23/Debt-Rush" target="_blank" rel="noopener">GitHub</a>
           <a href="https://www.youtube.com/watch?v=60bzJhksNKw" target="_blank" rel="noopener">Trailer</a>
+          <a class="readmore" href="debtrush.html">Read more &rarr;</a>
         </div>
       </article>
 
@@ -418,6 +431,7 @@
         <div class="links">
           <a href="https://sadafnezam.itch.io/the-upgrader">itch.io</a>
           <a href="https://github.com/sadafnezam/The-Upgrader">GitHub</a>
+          <a class="readmore" href="upgrader.html">Read more &rarr;</a>
         </div>
       </article>
 
