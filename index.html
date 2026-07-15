@@ -218,6 +218,8 @@
     transition: border-color 0.25s, transform 0.25s;
   }
   .mini:hover { transform: translateY(-3px); border-color: var(--muted); }
+  .mini[data-href] { cursor: pointer; }
+  .mini[data-href]:hover { border-color: var(--p1); }
   .mini .thumb {
     width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;
     border-bottom: 1px solid var(--panel-edge); background: #0f0e14;
@@ -227,8 +229,15 @@
   .mini .wx-position { font-family: var(--display); font-weight: 500; font-size: 15px; color: var(--p1); margin: -2px 0 7px; }
   .mini .mini-meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
   .mini p { font-size: 15px; line-height: 1.5; color: var(--paper); margin-bottom: 14px; }
-  .mini .links a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--p2); text-decoration: none; margin-right: 16px; border-bottom: 1px solid transparent; padding-bottom: 2px; transition: border-color 0.2s; }
-  .mini .links a:hover { border-bottom-color: currentColor; }
+  .mini .links { display: flex; flex-wrap: wrap; gap: 8px 8px; }
+  .mini .links a {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
+    color: var(--paper); text-decoration: none;
+    padding: 6px 11px;
+    border: 1px solid var(--panel-edge); border-radius: 20px;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .mini .links a:hover { border-color: var(--p2); color: var(--p2); background: rgba(87,210,205,0.08); }
   .mini .wx-label { font-family: var(--mono); font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 16px 0 9px; }
   .mini .wx-role ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
   .mini .wx-role li { position: relative; padding-left: 16px; font-size: 14px; line-height: 1.5; color: var(--paper); }
@@ -581,14 +590,13 @@
           </div>
         </article>
 
-        <!-- Javanmardan -->
-        <article class="mini reveal">
+        <article class="mini reveal" data-href="javanmardan.html">
           <img class="thumb" alt="Javanmardan" src="javanmardan.jpg">
           <div class="mini-body">
             <h4>Javanmardan</h4>
             <div class="wx-position">Cinematic Artist</div>
             <div class="mini-meta">Jan 2023 - Aug 2023 | Ifa Tasvir Studio | Full-Time</div>
-            <p>A 3D animated series with heroic, historical themes, following a group of heroes through a fictional past.</p>
+            <p>A 3D animated series with heroic, historical themes, following a group of heroes through a fictional era in the past.</p>
             <div class="wx-role">
               <div class="wx-label">My role</div>
               <ul>
@@ -596,6 +604,9 @@
                 <li>Worked on full scene assembly through to final render, including particles and post-process effects.</li>
                 <li>Worked within a studio production pipeline using Jira and SVN version control.</li>
               </ul>
+            </div>
+            <div class="links">
+              <a class="btn" href="https://www.youtube.com/watch?v=zoCAxmoJJMQ" target="_blank" rel="noopener">Watch an Episode</a>
             </div>
           </div>
         </article>
